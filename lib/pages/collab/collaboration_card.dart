@@ -1,4 +1,4 @@
-import 'package:atm_planner/model/chat/chat.dart';
+import 'package:atm_planner/model/chat/chat_model.dart';
 import 'package:flutter/material.dart';
 
 class CollaborationCard extends StatelessWidget {
@@ -9,7 +9,7 @@ class CollaborationCard extends StatelessWidget {
     );
   }
 
-  Chat collaboration;
+  final Chat collaboration;
 
   CollaborationCard({this.collaboration});
 }
