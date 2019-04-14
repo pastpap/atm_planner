@@ -1,4 +1,4 @@
-import 'package:atm_planner/model/chat/chat.dart';
+import 'package:atm_planner/model/chat/chat_model.dart';
 import 'package:atm_planner/model/message/message.dart';
 import 'package:atm_planner/model/user/user.dart';
 import 'package:built_collection/built_collection.dart';
