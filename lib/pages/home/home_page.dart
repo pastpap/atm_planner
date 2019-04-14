@@ -2,7 +2,6 @@ import 'package:atm_planner/bloc/flight_list_bloc.dart';
 import 'package:atm_planner/colors.dart';
 import 'package:atm_planner/pages/collab/collab_list.dart';
 import 'package:atm_planner/pages/flights/flight_list_page.dart';
-import 'package:atm_planner/pages/flights/flight_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

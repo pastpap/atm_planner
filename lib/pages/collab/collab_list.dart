@@ -1,7 +1,7 @@
 import 'package:atm_planner/model/chat/factory/ChatFactory.dart';
 import 'package:flutter/material.dart';
 import 'package:atm_planner/pages/collab/collaboration_card.dart';
-import 'package:atm_planner/model/chat/chat.dart';
+import 'package:atm_planner/model/chat/chat_model.dart';
 
 class CollaborationListPage extends StatefulWidget {
   CollaborationListPage({Key key, this.title}) : super(key: key);
