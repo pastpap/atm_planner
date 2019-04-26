@@ -1,9 +1,11 @@
 import 'package:atm_planner/model/flight/factory/FlightFactory.dart';
 import 'package:atm_planner/model/flight/flight_model.dart';
+import 'package:atm_planner/model/user/user.dart';
 
 class FlightListState {
   List<Flight> flightList;
   List<String> selectedFlightIds;
+  var currentUser = User(userName: 'User1');
 
   FlightListState._();
 

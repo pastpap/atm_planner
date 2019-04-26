@@ -1,9 +1,12 @@
+import 'package:atm_planner/bloc/flight_list_bloc.dart';
 import 'package:atm_planner/model/chat/factory/ChatFactory.dart';
 import 'package:atm_planner/model/message/message.dart';
 import 'package:atm_planner/model/user/user.dart';
+import 'package:atm_planner/pages/collab/collab_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:atm_planner/pages/collab/collaboration_card.dart';
 import 'package:atm_planner/model/chat/chat_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CollaborationListPage extends StatefulWidget {
   CollaborationListPage({Key key, this.title}) : super(key: key);
@@ -21,7 +24,7 @@ class _CollaborationListPageState extends State<CollaborationListPage> {
         (int index) => User(userName: "User" + (index + 1).toString()),
       )),
       messages: List.generate(
-          3,
+          2,
           (int index) => Message(
                 originator: User(userName: "User" + (index + 1).toString()),
                 addedOn: DateTime.now(),
@@ -35,7 +38,7 @@ class _CollaborationListPageState extends State<CollaborationListPage> {
         (int index) => User(userName: "User" + (index + 1).toString()),
       )),
       messages: List.generate(
-          1,
+          2,
           (int index) => Message(
                 originator: User(userName: "User" + (index + 1).toString()),
                 addedOn: DateTime.now(),
@@ -49,7 +52,7 @@ class _CollaborationListPageState extends State<CollaborationListPage> {
         (int index) => User(userName: "User" + (index + 1).toString()),
       )),
       messages: List.generate(
-          2,
+          3,
           (int index) => Message(
                 originator: User(userName: "User" + (index + 1).toString()),
                 addedOn: DateTime.now(),
@@ -60,6 +63,9 @@ class _CollaborationListPageState extends State<CollaborationListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final FlightListBloc _flightListBloc =
+        BlocProvider.of<FlightListBloc>(context);
+    User currentUser = _flightListBloc.currentState.currentUser;
     return Container(
       child: ListView.builder(
         itemCount: _collaborations.length,
@@ -69,7 +75,20 @@ class _CollaborationListPageState extends State<CollaborationListPage> {
             title: CollaborationCard(
               collaboration: _collaborations[i],
             ),
-            //onTap: () => _showDetails(flights[i]),
+            onTap: () => _showDetails(_collaborations[i], currentUser),
+          );
+        },
+      ),
+    );
+  }
+
+  void _showDetails(Chat chat, User currentUser) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return CollaborationDetails(
+            chat: chat,
+            currentUser: currentUser,
           );
         },
       ),

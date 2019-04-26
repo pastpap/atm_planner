@@ -27,6 +27,8 @@ dependencies:
   intl: ^0.15.7
   flutter_bloc: ^0.9.1
   flutter_launcher_icons: ^0.7.0
+  random_color: ^1.0.3
+
 
 dev_dependencies:
   flutter_test:
