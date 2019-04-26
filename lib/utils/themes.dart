@@ -8,7 +8,7 @@ class Themes {
   );
 
   static ThemeData kDefaultTheme = new ThemeData(
-    primarySwatch: Colors.deepPurple[300],
+    primarySwatch: Colors.deepPurple,
     accentColor: Colors.blue[400],
   );
 }
