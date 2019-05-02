@@ -45,14 +45,18 @@ class _CollaborationDetailsState extends State<CollaborationDetails>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              Text(
-                widget.chat.title,
-                style: bold_light_30,
+              Expanded(
+                child: Text(
+                  widget.chat.title,
+                  style: bold_light_20,
+                ),
               ),
             ],
           ),
