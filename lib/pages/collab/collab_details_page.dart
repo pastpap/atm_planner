@@ -45,7 +45,6 @@ class _CollaborationDetailsState extends State<CollaborationDetails>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Container(
