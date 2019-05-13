@@ -2,7 +2,6 @@ import 'package:atm_planner/colors.dart';
 import 'package:atm_planner/model/chat/chat_model.dart';
 import 'package:atm_planner/model/message/message.dart';
 import 'package:atm_planner/model/user/user.dart';
-import 'package:built_collection/src/list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
