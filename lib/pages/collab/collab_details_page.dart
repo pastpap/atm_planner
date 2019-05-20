@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:random_color/random_color.dart';
 
+var _scaffoldContext;
+
 class CollaborationDetails extends StatefulWidget {
   CollaborationDetails({this.chat, this.currentUser});
   final Chat chat;
@@ -20,6 +22,15 @@ class _CollaborationDetailsState extends State<CollaborationDetails>
   List<Color> _userColors = <Color>[];
   final TextEditingController _textController = TextEditingController();
   bool _isComposing = false;
+
+  Choice _selectedChoice = choices[0]; // promotion "state".
+
+  void _select(Choice choice) {
+    // Causes the app to rebuild with the new _selectedChoice.
+    setState(() {
+      _selectedChoice = choice;
+    });
+  }
 
   RandomColor _randomColor = RandomColor();
   initState() {
@@ -46,6 +57,19 @@ class _CollaborationDetailsState extends State<CollaborationDetails>
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        actions: <Widget>[
+          PopupMenuButton<Choice>(
+            onSelected: _select,
+            itemBuilder: (BuildContext context) {
+              return choices.map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  child: Text(choice.title),
+                );
+              }).toList();
+            },
+          ),
+        ],
         title: Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -62,23 +86,29 @@ class _CollaborationDetailsState extends State<CollaborationDetails>
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
       ),
       body: Container(
-          child: Column(children: <Widget>[
-            Flexible(
-              child: ListView.builder(
-                padding: EdgeInsets.all(8.0),
-                reverse: true,
-                itemBuilder: (_, int index) {
-                  return _messages[index];
-                },
-                itemCount: _messages.length,
+          child: Column(
+            children: <Widget>[
+              Flexible(
+                child: ListView.builder(
+                  padding: EdgeInsets.all(8.0),
+                  reverse: true,
+                  itemBuilder: (_, int index) {
+                    return _messages[index];
+                  },
+                  itemCount: _messages.length,
+                ),
               ),
-            ),
-            Divider(height: 1.0),
-            Container(
-              decoration: BoxDecoration(color: Theme.of(context).cardColor),
-              child: _buildTextComposer(),
-            ),
-          ]),
+              Divider(height: 1.0),
+              Container(
+                decoration: BoxDecoration(color: Theme.of(context).cardColor),
+                child: _buildTextComposer(),
+              ),
+              Builder(builder: (BuildContext context) {
+                _scaffoldContext = context;
+                return new Container(width: 0.0, height: 0.0);
+              })
+            ],
+          ),
           decoration: Theme.of(context).platform == TargetPlatform.iOS
               ? BoxDecoration(
                   border: Border(top: BorderSide(color: Colors.grey[200])))
@@ -118,9 +148,7 @@ class _CollaborationDetailsState extends State<CollaborationDetails>
     return IconTheme(
       data: IconThemeData(color: Theme.of(context).accentColor),
       child: Container(
-          margin: Theme.of(context).platform == TargetPlatform.iOS
-              ? const EdgeInsets.fromLTRB(8.0, 0, 8.0, 20.0)
-              : const EdgeInsets.symmetric(horizontal: 8.0),
+          margin: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(children: <Widget>[
             Flexible(
               child: TextField(
@@ -158,6 +186,18 @@ class _CollaborationDetailsState extends State<CollaborationDetails>
     );
   }
 }
+
+class Choice {
+  const Choice({this.title, this.icon});
+
+  final String title;
+  final IconData icon;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'Add Participants', icon: Icons.group_add),
+  const Choice(title: 'Add Flight', icon: Icons.flight),
+];
 
 class ChatMessage extends StatelessWidget {
   ChatMessage({this.message, this.animationController, this.currentUser});

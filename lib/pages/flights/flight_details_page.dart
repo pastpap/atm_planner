@@ -1,9 +1,11 @@
+import 'package:atm_planner/bloc/flight_list_bloc.dart';
 import 'package:atm_planner/model/regulations/regulation_model.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:atm_planner/colors.dart';
 import 'package:atm_planner/model/flight/flight_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class FlightDetails extends StatefulWidget {
@@ -18,29 +20,69 @@ class FlightDetails extends StatefulWidget {
 }
 
 class FlightDetailsState extends State<FlightDetails> {
-  // var _active = true;
-
   final tripleDigits = new NumberFormat("000", "en_US");
+  Choice _selectedChoice = choices[0]; // promotion "state".
+
+  void _select(Choice choice) {
+    // Causes the app to rebuild with the new _selectedChoice.
+    setState(() {
+      _selectedChoice = choice;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final FlightListBloc _flightListBloc =
+        BlocProvider.of<FlightListBloc>(context);
+    var isDemotable =
+        _flightListBloc.currentState.improvedFlights.contains(widget.flight);
+
     return new Scaffold(
       appBar: new AppBar(
-          title: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              widget.flight.arcID,
-              style: bold_light_30,
-            ),
-            Text(
-              widget.flight.isPriority ? 'PRIO' : '',
-              style: bold_red_30,
-            ),
-          ],
+        actions: <Widget>[
+          PopupMenuButton<Choice>(
+            onSelected: (Choice result) {
+              if (result.title == 'Promote') {
+                _flightListBloc.onAddFlightToImproved(widget.flight);
+              } else {
+                _flightListBloc.onRemoveFlightFromImproved(widget.flight);
+              }
+              setState(() {});
+            },
+            itemBuilder: (BuildContext context) {
+              return choices.map((Choice choice) {
+                return PopupMenuItem<Choice>(
+                  value: choice,
+                  enabled:
+                      choice.title == 'Promote' ? !isDemotable : isDemotable,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(choice.title),
+                      Icon(choice.icon),
+                    ],
+                  ),
+                );
+              }).toList();
+            },
+          ),
+        ],
+        title: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Text(
+                widget.flight.arcID,
+                style: bold_light_30,
+              ),
+              Text(
+                widget.flight.isPriority ? 'PRIO' : '',
+                style: bold_red_30,
+              ),
+            ],
+          ),
         ),
-      )),
+      ),
       body: Container(
         //padding: EdgeInsets.all(16),
 
@@ -425,3 +467,15 @@ class HistoryCard extends StatelessWidget {
     );
   }
 }
+
+class Choice {
+  const Choice({this.title, this.icon});
+
+  final String title;
+  final IconData icon;
+}
+
+const List<Choice> choices = const <Choice>[
+  const Choice(title: 'Promote', icon: Icons.trending_up),
+  const Choice(title: 'Demote', icon: Icons.trending_down),
+];

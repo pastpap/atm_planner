@@ -1,14 +1,16 @@
+import 'package:atm_planner/bloc/flight_list_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:atm_planner/colors.dart';
 import 'package:atm_planner/model/flight/flight_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class FlightCard extends StatefulWidget {
-  FlightCard({this.flight});
+  FlightCard({this.flight, this.inactive});
 
   final Flight flight;
-
+  final bool inactive;
   @override
   FlightCardState createState() {
     return new FlightCardState();
@@ -16,12 +18,12 @@ class FlightCard extends StatefulWidget {
 }
 
 class FlightCardState extends State<FlightCard> {
-  var _active = true;
-
   final tripleDigits = new NumberFormat("000", "en_US");
 
   @override
   Widget build(BuildContext context) {
+    final FlightListBloc _flightListBloc =
+        BlocProvider.of<FlightListBloc>(context);
     return Container(
       //padding: EdgeInsets.all(16),
       child: Center(
@@ -29,7 +31,7 @@ class FlightCardState extends State<FlightCard> {
           child: Material(
             shadowColor: widget.flight.isPriority ? red_text : gray_background,
             elevation: 4,
-            color: _active ? light_background : gray_background,
+            color: widget.inactive ? light_background : gray_background,
             borderRadius: BorderRadius.all(
               Radius.circular(10.0),
             ),
@@ -103,9 +105,15 @@ class FlightCardState extends State<FlightCard> {
                           Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: CupertinoSwitch(
-                              value: _active,
+                              value: widget.inactive,
                               onChanged: (bool value) {
-                                _active = value;
+                                if (widget.inactive) {
+                                  _flightListBloc
+                                      .onActivate(widget.flight.ifplid);
+                                } else {
+                                  _flightListBloc
+                                      .onDeactivate(widget.flight.ifplid);
+                                }
                                 setState(() {});
                               },
                             ),

@@ -4,6 +4,7 @@ import 'package:atm_planner/model/user/user.dart';
 
 class FlightListState {
   List<Flight> flightList;
+  List<Flight> improvedFlights;
   List<String> selectedFlightIds;
   var currentUser = User(userName: 'User1');
 
@@ -12,12 +13,14 @@ class FlightListState {
   factory FlightListState.initial() {
     return FlightListState._()
       ..flightList = FlightFactory.generateNewFlights(10)
+      ..improvedFlights = new List()
       ..selectedFlightIds = new List();
   }
-  factory FlightListState.newStateBasedOnList(
-      List<Flight> currentList, List<String> currentSelection) {
+  factory FlightListState.newStateBasedOnList(List<Flight> currentList,
+      List<Flight> currentImprovedFights, List<String> currentSelection) {
     return FlightListState._()
       ..flightList = currentList
+      ..improvedFlights = currentImprovedFights
       ..selectedFlightIds = currentSelection;
   }
 }

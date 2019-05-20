@@ -6,20 +6,20 @@ import 'package:atm_planner/pages/flights/flight_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FlightListPage extends StatefulWidget {
-  FlightListPage({Key key, this.title}) : super(key: key);
+class ImprovedFlightListPage extends StatefulWidget {
+  ImprovedFlightListPage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _FlightListPageState createState() => _FlightListPageState();
+  _ImprovedFlightListPageState createState() => _ImprovedFlightListPageState();
 }
 
-class _FlightListPageState extends State<FlightListPage> {
+class _ImprovedFlightListPageState extends State<ImprovedFlightListPage> {
   @override
   Widget build(BuildContext context) {
     final FlightListBloc _flightListBloc =
         BlocProvider.of<FlightListBloc>(context);
-    List<Flight> flights = _flightListBloc.currentState.flightList;
+    List<Flight> flights = _flightListBloc.currentState.improvedFlights;
     List<String> deselectedFlights =
         _flightListBloc.currentState.selectedFlightIds;
 
@@ -34,10 +34,6 @@ class _FlightListPageState extends State<FlightListPage> {
                   itemCount: flights.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int i) {
-                    // If you've reached the end of the available flights
-                    if (flights.length - i <= 1) {
-                      _flightListBloc.onAddFlights();
-                    }
                     return ListTile(
                       title: FlightCard(
                         flight: flights[i],
