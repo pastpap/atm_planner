@@ -92,3 +92,33 @@ const bold_light_30 = TextStyle(
   fontSize: 30.0,
   fontWeight: FontWeight.w600,
 );
+
+const bold_light_15 = TextStyle(
+  color: light_background,
+  fontSize: 15.0,
+  fontWeight: FontWeight.w600,
+);
+
+const bold_light_20 = TextStyle(
+  color: light_background,
+  fontSize: 20.0,
+  fontWeight: FontWeight.w600,
+);
+
+const bold_gray_30 = TextStyle(
+  color: gray_background,
+  fontSize: 30.0,
+  fontWeight: FontWeight.w600,
+);
+
+const bold_gray_15 = TextStyle(
+  color: gray_background,
+  fontSize: 15.0,
+  fontWeight: FontWeight.w600,
+);
+
+const bold_gray_20 = TextStyle(
+  color: gray_background,
+  fontSize: 20.0,
+  fontWeight: FontWeight.w600,
+);

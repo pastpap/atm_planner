@@ -1,3 +1,5 @@
+import 'package:atm_planner/model/message/message.dart';
+import 'package:atm_planner/model/user/user.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 
@@ -7,9 +9,9 @@ abstract class Chat implements Built<Chat, ChatBuilder> {
   //static Serializer<Chat> get serializer => _$chatSerializer;
   String get title;
   @nullable
-  BuiltSet<String> get participants;
+  BuiltSet<User> get participants;
   @nullable
-  BuiltSet<String> get messages;
+  BuiltList<Message> get messages;
 
   factory Chat([updates(ChatBuilder b)]) = _$Chat;
   Chat._();

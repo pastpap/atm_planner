@@ -10,9 +10,9 @@ class _$Chat extends Chat {
   @override
   final String title;
   @override
-  final BuiltSet<String> participants;
+  final BuiltSet<User> participants;
   @override
-  final BuiltSet<String> messages;
+  final BuiltList<Message> messages;
 
   factory _$Chat([void Function(ChatBuilder) updates]) =>
       (new ChatBuilder()..update(updates)).build();
@@ -62,16 +62,16 @@ class ChatBuilder implements Builder<Chat, ChatBuilder> {
   String get title => _$this._title;
   set title(String title) => _$this._title = title;
 
-  SetBuilder<String> _participants;
-  SetBuilder<String> get participants =>
-      _$this._participants ??= new SetBuilder<String>();
-  set participants(SetBuilder<String> participants) =>
+  SetBuilder<User> _participants;
+  SetBuilder<User> get participants =>
+      _$this._participants ??= new SetBuilder<User>();
+  set participants(SetBuilder<User> participants) =>
       _$this._participants = participants;
 
-  SetBuilder<String> _messages;
-  SetBuilder<String> get messages =>
-      _$this._messages ??= new SetBuilder<String>();
-  set messages(SetBuilder<String> messages) => _$this._messages = messages;
+  ListBuilder<Message> _messages;
+  ListBuilder<Message> get messages =>
+      _$this._messages ??= new ListBuilder<Message>();
+  set messages(ListBuilder<Message> messages) => _$this._messages = messages;
 
   ChatBuilder();
 
