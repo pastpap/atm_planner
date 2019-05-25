@@ -1,5 +1,6 @@
 import 'package:atm_planner/bloc/flight_list_bloc.dart';
 import 'package:atm_planner/pages/home/home_page.dart';
+import 'package:atm_planner/pages/login/login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:atm_planner/utils/themes.dart';
@@ -24,7 +25,7 @@ class ATMPlanner extends StatelessWidget {
         theme: defaultTargetPlatform == TargetPlatform.iOS
             ? Themes.kIOSTheme
             : Themes.kDefaultTheme,
-        home: AtmPlannerHomePage(title: 'ATM Planner'),
+        home: Login(),
       ),
     );
   }
